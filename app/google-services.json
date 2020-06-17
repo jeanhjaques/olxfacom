@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "53142044813",
+    "firebase_url": "https://olx-facom.firebaseio.com",
+    "project_id": "olx-facom",
+    "storage_bucket": "olx-facom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53142044813:android:672002772fdf6736c322c4",
+        "android_client_info": {
+          "package_name": "com.progmobile.olxfacom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53142044813-9s8kdicav5tnavv73d0dv3bj9lcv96oe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.progmobile.olxfacom",
+            "certificate_hash": "5fc20f08ceeac0fdd922ef0ec0bb4d988f91e116"
+          }
+        },
+        {
+          "client_id": "53142044813-7scgtqdq6dnko6vebn5n1jsj4pe35hle.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvW7212EUCikaifEe2I9ccZFo1CjqDvvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53142044813-7scgtqdq6dnko6vebn5n1jsj4pe35hle.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+
 import com.progmobile.olxfacom.R;
+import com.progmobile.olxfacom.helper.ConfiguracaoFirebase;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ public class AnunciosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anuncios);
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
     }
 
     @Override
@@ -28,8 +32,9 @@ public class AnunciosActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(autenticacao == null){
-//            autenticacao.getCurrentUser()
+
+        if(autenticacao.getCurrentUser() == null){
+//
             menu.setGroupVisible(R.id.group_deslogado, true);
 
         }else{
@@ -45,7 +50,7 @@ public class AnunciosActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), CadastroActivity.class));
                 break;
             case R.id.menu_sair:
-                autenticacao.signOut();
+                autenticacao.getInstance().signOut();
                 invalidateOptionsMenu();
                 break;
             case R.id.menu_anuncios:

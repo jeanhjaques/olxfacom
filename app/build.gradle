@@ -42,5 +42,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:15.0.0'
     implementation 'com.google.firebase:firebase-storage:15.0.0'
     implementation 'com.google.firebase:firebase-auth:15.0.0'
+    /*Dependencia mascara moeda*/
+    implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
 
 }

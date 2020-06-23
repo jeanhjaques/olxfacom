@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
 import com.progmobile.olxfacom.R;
@@ -56,7 +57,61 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
 
     }
 
-    public void salvarAnuncio(View view) {
+    public void validarDadosAnuncio(View view){
+        String fone = "";
+        String estado = spinnerEstado.getSelectedItem().toString();
+        String categoria = spinnerCategoria.getSelectedItem().toString();
+        String titulo = campoTitulo.getText().toString();
+        String valor = String.valueOf(campoValor.getRawValue());
+        String telefone = campoTelefone.getText().toString();
+        String descricao =  campoDescricao.getText().toString();
+        if(campoTelefone.getRawText()!= null) {
+            fone = campoTelefone.getRawText().toString();
+        }
+
+        if(listaFotosRecuperadas.size() != 0) {
+            if(!estado.isEmpty()) {
+                if(!categoria.isEmpty()) {
+                    if(!titulo.isEmpty()) {
+                        if(!valor.isEmpty() && !valor.equals("0")) {
+                            if(!telefone.isEmpty() && fone.length() == 11) {
+                                if(!descricao.isEmpty()) {
+                                    salvarAnuncio();
+                                }
+                                else {
+                                    exibirMensagemErro("Preencha o campo descrição");
+                                }
+                            }
+                            else {
+                                exibirMensagemErro("Preencha o campo telefone");
+                            }
+                        }
+                        else {
+                            exibirMensagemErro("Preencha o campo valor");
+                        }
+                    }
+                    else {
+                        exibirMensagemErro("Preencha o campo título");
+                    }
+                }
+                else {
+                    exibirMensagemErro("Preencha o campo categoria");
+                }
+            }
+            else {
+                exibirMensagemErro("Preencha o campo estado");
+            }
+        }
+        else {
+            exibirMensagemErro("Selecione pelo menos uma foto!");
+        }
+    }
+
+    private void exibirMensagemErro(String mensagem) {
+        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
+    }
+
+    public void salvarAnuncio() {
         String valor = campoTelefone.getText().toString();
         Log.d("salvar","salvarAnuncio" + valor);
 
@@ -119,10 +174,6 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoria.setAdapter(adapterCategoria);
 
-//        ArrayAdapter adapterEstado = ArrayAdapter.createFromResource(this,R.array.estados,android.R.layout.simple_spinner_item);
-//        ArrayAdapter adapterCategoria = ArrayAdapter.createFromResource(this,R.array.categorias,android.R.layout.simple_spinner_item);
-//        spinnerEstado.setAdapter(adapterEstado);
-//        spinnerCategoria.setAdapter(adapterCategoria);
     }
 
     private void inicializarComponentes() {

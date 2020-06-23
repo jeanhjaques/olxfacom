@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">OLX Facom</string>
-    <string name="title_activity_meus_anuncios">MeusAnunciosActivity</string>
+    <string name="title_activity_meus_anuncios">Meus Anúncios</string>
     <!-- Strings used for fragments for navigation -->
     <string-array name="estados">
         <item>AC</item>
@@ -33,5 +33,12 @@
 
     <string-array name="categorias">
         <item>Automóveis</item>
+        <item>Imóveis</item>
+        <item>Eletrônicos</item>
+        <item>Moda</item>
+        <item>Esportes</item>
+        <item>Música</item>
+        <item>Infantil</item>
+        <item>Agro</item>
     </string-array>
 </resources>

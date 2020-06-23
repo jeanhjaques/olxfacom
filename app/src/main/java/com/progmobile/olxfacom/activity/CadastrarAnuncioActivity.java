@@ -52,11 +52,7 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
         Permissoes.validarPermissoes(permissoes, this, 1);
 
         inicializarComponentes();
-
-        ArrayAdapter adapterEstado = ArrayAdapter.createFromResource(this,R.array.estados,android.R.layout.simple_spinner_item);
-        ArrayAdapter adapterCategoria = ArrayAdapter.createFromResource(this,R.array.categorias,android.R.layout.simple_spinner_item);
-        spinnerEstado.setAdapter(adapterEstado);
-        spinnerCategoria.setAdapter(adapterCategoria);
+        carregarDadosSpinner();
 
     }
 
@@ -109,6 +105,24 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
 
             listaFotosRecuperadas.add(caminhoImagem);
         }
+    }
+
+    private void carregarDadosSpinner() {
+
+        String[] estados = getResources().getStringArray(R.array.estados);
+        ArrayAdapter<String> adapterEstado = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, estados);
+        adapterEstado.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEstado.setAdapter(adapterEstado);
+
+        String[] categorias = getResources().getStringArray(R.array.categorias);
+        ArrayAdapter<String> adapterCategoria = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, categorias);
+        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategoria.setAdapter(adapterCategoria);
+
+//        ArrayAdapter adapterEstado = ArrayAdapter.createFromResource(this,R.array.estados,android.R.layout.simple_spinner_item);
+//        ArrayAdapter adapterCategoria = ArrayAdapter.createFromResource(this,R.array.categorias,android.R.layout.simple_spinner_item);
+//        spinnerEstado.setAdapter(adapterEstado);
+//        spinnerCategoria.setAdapter(adapterCategoria);
     }
 
     private void inicializarComponentes() {

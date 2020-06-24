@@ -49,4 +49,8 @@ dependencies {
 
     /*Dependencia mascara telefone*/
     implementation 'com.github.santalu:mask-edittext:1.1.1'
+
+    /*Dependencia de Dialog Progress*/
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+
 }

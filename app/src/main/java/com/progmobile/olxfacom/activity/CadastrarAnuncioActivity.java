@@ -36,6 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import dmax.dialog.SpotsDialog;
+
+
 public class CadastrarAnuncioActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText campoTitulo, campoDescricao;
@@ -45,6 +48,7 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
     private Spinner spinnerEstado, spinnerCategoria;
     private Anuncio anuncio;
     private StorageReference storage;
+    private android.app.AlertDialog dialog;
 
     private String[] permissoes = new String[] {
             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -69,12 +73,22 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
     }
 
     public void salvarAnuncio() {
+
+
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Publicando anúncio... Essa ação pode demorar!")
+                .build();
+        dialog.show();
+
         // Salvar as img no storage
         for (int i = 0; i < listaFotosRecuperadas.size(); i++) {
             String urlImagem = listaFotosRecuperadas.get(i);
             int tamanhoLista = listaFotosRecuperadas.size();
             salvarFotoStorage(urlImagem, tamanhoLista, i);
         }
+
+
 
     }
 
@@ -95,6 +109,8 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
                 if(totalFotos == listaURLFotos.size()){
                     anuncio.setFotos(listaURLFotos);
                     anuncio.salvar();
+                    dialog.dismiss();
+                    finish();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

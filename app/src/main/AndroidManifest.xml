@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.progmobile.olxfacom">
-
-    <!-- Permissoes para usar internet-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <!-- Permissoes para usar galeria-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- Permissoes para usar internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissoes para usar galeria -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,11 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CadastrarAnuncioActivity"></activity>
+        <activity android:name=".activity.DetalhesProdutoActivity"
+            android:parentActivityName=".activity.AnunciosActivity"></activity>
+        <activity android:name=".activity.CadastrarAnuncioActivity" />
         <activity
             android:name=".activity.MeusAnunciosActivity"
             android:label="@string/title_activity_meus_anuncios"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.AnunciosActivity"/>
         <activity android:name=".activity.AnunciosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CadastroActivity" />
+        <activity android:name=".activity.CadastroActivity"
+            android:parentActivityName=".activity.AnunciosActivity"/>
     </application>
 
 </manifest>

@@ -11,12 +11,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.progmobile.olxfacom.helper.ConfiguracaoFirebase;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.progmobile.olxfacom.helper.ConfiguracaoFirebase.getFirebase;
 import static com.progmobile.olxfacom.helper.ConfiguracaoFirebase.getIdUsuario;
 
-public class Anuncio {
+public class Anuncio implements Serializable {
 
     private String idAnuncio;
     private String estado;

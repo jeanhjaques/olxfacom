@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.progmobile.olxfacom.R;
 import com.progmobile.olxfacom.adapter.AdapterAnuncio;
 import com.progmobile.olxfacom.helper.ConfiguracaoFirebase;
+import com.progmobile.olxfacom.helper.RecyclerItemClickListener;
 import com.progmobile.olxfacom.model.Anuncio;
 
 import java.util.ArrayList;
@@ -62,7 +64,33 @@ public class MeusAnunciosActivity extends AppCompatActivity {
         recyclerAnuncios.setHasFixedSize(true);
         adapterAnuncio = new AdapterAnuncio(anuncios, this);
         recyclerAnuncios.setAdapter(adapterAnuncio);
+
+        //Listar meus anuncios
         recuperarAnuncios();
+
+        //Evento de Clique
+        recyclerAnuncios.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        this, recyclerAnuncios, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+                        Anuncio anuncioSelecionado = anuncios.get(position);
+                        anuncioSelecionado.remover();
+                        adapterAnuncio.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }
+                )
+        );
     }
 
     private void recuperarAnuncios(){

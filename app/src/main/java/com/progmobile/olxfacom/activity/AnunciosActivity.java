@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,8 @@ public class AnunciosActivity extends AppCompatActivity {
     private DatabaseReference anunciosPublicosRef;
     private AlertDialog dialog;
     private String filtroEstado = "";
+    private String filtroCategoria = "";
+    private boolean filtrandoPorEstado = false;
 
 
     @Override
@@ -89,6 +92,7 @@ public class AnunciosActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 filtroEstado = spinnerEstado.getSelectedItem().toString();
                 recuperarAnunciosPorEstado();
+                filtrandoPorEstado = true;
             }
         });
 
@@ -101,6 +105,81 @@ public class AnunciosActivity extends AppCompatActivity {
 
         AlertDialog dialog = dialogEstado.create();
         dialog.show();
+    }
+
+    public void filtrarPorCategoria(View view){
+        if(filtrandoPorEstado == true){
+            AlertDialog.Builder dialogEstado = new AlertDialog.Builder(this);
+            dialogEstado.setTitle("Selecione a categoria desejada");
+
+            //Configurar spinner
+            View viewSpinner = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
+
+            //Configura spinner de categorias
+            final Spinner spinnerCategoria = viewSpinner.findViewById(R.id.spinnerFiltro);
+            String[] categorias = getResources().getStringArray(R.array.categorias);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item,
+                    categorias
+            );
+            adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+            spinnerCategoria.setAdapter( adapter );
+
+            dialogEstado.setView( viewSpinner );
+
+            dialogEstado.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    filtroCategoria = spinnerCategoria.getSelectedItem().toString();
+                    recuperarAnunciosPorCategoria();
+                }
+            });
+
+            dialogEstado.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = dialogEstado.create();
+            dialog.show();
+        }
+        else{
+            Toast.makeText(this,"Escolha primeiro uma regio!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void recuperarAnunciosPorCategoria(){
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Carregando seus anúncios")
+                .build();
+        dialog.show();
+
+        //Configura nó por estado
+        anunciosPublicosRef = ConfiguracaoFirebase.getFirebase().child("anuncios").child(filtroEstado).child(filtroCategoria);
+        anunciosPublicosRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listaAnuncios.clear();
+                for(DataSnapshot anuncios: dataSnapshot.getChildren()){
+                    Anuncio anuncio = anuncios.getValue(Anuncio.class);
+                    listaAnuncios.add(anuncio);
+                }
+                Collections.reverse(listaAnuncios);
+                adapterAnuncios.notifyDataSetChanged();
+                dialog.dismiss();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void recuperarAnunciosPorEstado(){

@@ -1,10 +1,5 @@
 package com.progmobile.olxfacom.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -21,10 +16,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.blackcat.currencyedittext.CurrencyEditText;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.progmobile.olxfacom.R;
@@ -52,6 +51,8 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
     };
 
     private List<String> listaFotosRecuperadas = new ArrayList<>();
+    private List<String> listaURLFotos = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
 
     }
 
-    private void salvarFotoStorage(String urlString, int totalFotos, int contador) {
+    private void salvarFotoStorage(String urlString, final int totalFotos, int contador) {
         // Criar node no storage
         StorageReference imagemAnuncio = storage.child("imagens")
                 .child("anuncios")
@@ -90,6 +91,11 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri firebaseUrl = taskSnapshot.getDownloadUrl();
                 String urlConvertida = firebaseUrl.toString();
+                listaURLFotos.add(urlConvertida);
+                if(totalFotos == listaURLFotos.size()){
+                    anuncio.setFotos(listaURLFotos);
+                    anuncio.salvar();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -104,7 +110,7 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
         String estado = spinnerEstado.getSelectedItem().toString();
         String categoria = spinnerCategoria.getSelectedItem().toString();
         String titulo = campoTitulo.getText().toString();
-        String valor = String.valueOf(campoValor.getRawValue());
+        String valor = campoValor.getText().toString();
         String telefone = campoTelefone.getText().toString();
         String descricao =  campoDescricao.getText().toString();
 
@@ -126,12 +132,13 @@ public class CadastrarAnuncioActivity extends AppCompatActivity implements View.
         }
 
         anuncio = configurarAnuncio();
+        String valor = String.valueOf(campoValor.getRawValue());
 
         if(listaFotosRecuperadas.size() != 0) {
             if(!anuncio.getEstado().isEmpty()) {
                 if(!anuncio.getCategoria().isEmpty()) {
                     if(!anuncio.getTitulo().isEmpty()) {
-                        if(!anuncio.getValor().isEmpty() && !anuncio.getValor().equals("0")) {
+                        if(!valor.isEmpty() && !valor.equals("0")) {
                             if(!anuncio.getTelefone().isEmpty() && fone.length() == 11) {
                                 if(!anuncio.getDescricao().isEmpty()) {
                                     salvarAnuncio();

@@ -1,9 +1,14 @@
 package com.progmobile.olxfacom.model;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 import com.progmobile.olxfacom.helper.ConfiguracaoFirebase;
 
 import java.util.List;
+
+import static com.progmobile.olxfacom.helper.ConfiguracaoFirebase.getFirebase;
+import static com.progmobile.olxfacom.helper.ConfiguracaoFirebase.getIdUsuario;
 
 public class Anuncio {
 
@@ -17,10 +22,40 @@ public class Anuncio {
     private List<String> fotos;
 
     public Anuncio() {
-        DatabaseReference anuncioRef = ConfiguracaoFirebase.getFirebase()
+        DatabaseReference anuncioRef = getFirebase()
                 .child("meus_anuncios");
         setIdAnuncio(anuncioRef.push().getKey());
     }
+
+    public void salvar(){
+        Log.d("myTag", "This is my message");
+
+        DatabaseReference anuncioRef = getFirebase()
+                .child("meus_anuncios");
+
+        String idUsuario = getIdUsuario();
+
+        anuncioRef.child(idUsuario)
+                .child(idAnuncio)
+                .setValue(this);
+
+        salvarAnuncioPublico();
+
+    }
+
+    public void salvarAnuncioPublico(){
+
+
+        DatabaseReference anuncioRef = ConfiguracaoFirebase.getFirebase()
+                .child("anuncios");
+
+        anuncioRef.child( getEstado() )
+                .child( getCategoria() )
+                .child( getIdAnuncio() )
+                .setValue(this);
+
+    }
+
 
     public String getIdAnuncio() {
         return idAnuncio;

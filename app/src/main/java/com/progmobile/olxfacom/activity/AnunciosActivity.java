@@ -177,7 +177,7 @@ public class AnunciosActivity extends AppCompatActivity {
             dialog.show();
         }
         else{
-            Toast.makeText(this,"Escolha primeiro uma regio!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Escolha primeiro uma região!", Toast.LENGTH_SHORT).show();
         }
 
     }

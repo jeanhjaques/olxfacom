@@ -7,3 +7,6 @@ Este projeto consiste na criação de um app focado em compra e venda de produto
 em que o usuário tem a opção de anunciar ou de comprar um produto. O usuário também terá a condição de se cadastrar e logar,
 tendo acesso às funcionalidades do sistema de acordo com o contexto da aplicação, sendo algumas delas filtros de pesquisa,
 listagem de anúncios, fornecimento do contato do vendedor, entre outras.
+
+Para ver a documentação completa acesse:
+https://github.com/jeanhjaques/olxfacom/blob/master/doc/Trabalho%20Final%20de%20ProgMov.pdf
